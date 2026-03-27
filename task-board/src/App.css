@@ -1,38 +1,136 @@
-.App {
+.app-wrapper {
+  min-height: 100vh;
+  padding: 40px 24px;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: radial-gradient(circle at top left, #f0f8ff 0%, #d6eaff 45%, #eef2ff 100%);
+  color: #1e2a3a;
+}
+
+.board-header {
+  margin-bottom: 24px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.board-header h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 2.4vw, 3rem);
+  letter-spacing: 0.04em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.board-header p {
+  margin: 8px auto 0;
+  max-width: 520px;
+  color: #455a6a;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input-area {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.task-input {
+  width: min(480px, 72vw);
+  padding: 12px 14px;
+  border: 2px solid #a3b8cc;
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.task-input:focus {
+  border-color: #5a8be5;
+  box-shadow: 0 0 0 3px rgba(90, 139, 229, 0.2);
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #4c8aed, #52b8f7);
+  border: none;
   color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 101, 187, 0.28);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
 }
+
+.column {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(105, 127, 155, 0.35);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 13px 25px rgba(48, 66, 100, 0.12);
+  min-height: 380px;
+}
+
+.column h3 {
+  margin: 0 0 12px;
+  color: #2f4f75;
+}
+
+.task-card {
+  background: white;
+  border: 1px solid #d6e0ec;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: grid;
+  gap: 8px;
+  box-shadow: 0 8px 18px rgba(63, 81, 126, 0.1);
+}
+
+.task-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #2b3c52;
+  word-break: break-word;
+}
+
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.action-btn {
+  border: none;
+  background: #e7f0ff;
+  color: #2f4f75;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  transition: all 0.16s ease;
+  font-weight: 600;
+}
+
+.action-btn:hover {
+  background: #d8e9ff;
+  transform: translateY(-1px);
+}
+
+.action-btn.delete {
+  background: #f9d1d5;
+  color: #b53d47;
+}
+
+.action-btn.delete:hover {
+  background: #f5a8ae;
+}
+

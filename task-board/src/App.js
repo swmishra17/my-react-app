@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 
 const initialData = {
   todo: [],
@@ -10,23 +11,18 @@ function App() {
   const [tasks, setTasks] = useState(initialData);
   const [title, setTitle] = useState("");
 
-  // Load from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("tasks");
     if (saved) setTasks(JSON.parse(saved));
   }, []);
 
-  // Save to localStorage
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   const addTask = () => {
     if (!title.trim()) return;
-    const newTask = {
-      id: Date.now(),
-      title,
-    };
+    const newTask = { id: Date.now(), title };
     setTasks({ ...tasks, todo: [...tasks.todo, newTask] });
     setTitle("");
   };
@@ -43,19 +39,19 @@ function App() {
   };
 
   const Column = ({ title, columnKey }) => (
-    <div style={styles.column}>
+    <div className="column">
       <h3>{title}</h3>
       {tasks[columnKey].map((task) => (
-        <div key={task.id} style={styles.card}>
+        <div key={task.id} className="task-card">
           <p>{task.title}</p>
-          <div>
+          <div className="task-actions">
             {columnKey !== "todo" && (
-              <button onClick={() => moveTask(task, columnKey, "todo")}>←</button>
+              <button className="action-btn" onClick={() => moveTask(task, columnKey, "todo")}>↩</button>
             )}
             {columnKey !== "done" && (
-              <button onClick={() => moveTask(task, columnKey, columnKey === "todo" ? "inProgress" : "done")}>→</button>
+              <button className="action-btn" onClick={() => moveTask(task, columnKey, columnKey === "todo" ? "inProgress" : "done")}>↪</button>
             )}
-            <button onClick={() => deleteTask(task.id, columnKey)}>❌</button>
+            <button className="action-btn delete" onClick={() => deleteTask(task.id, columnKey)}>✕</button>
           </div>
         </div>
       ))}
@@ -63,19 +59,23 @@ function App() {
   );
 
   return (
-    <div style={styles.container}>
-      <h1>Task Board</h1>
+    <div className="app-wrapper">
+      <div className="board-header">
+        <h1>Task Board</h1>
+        <p>Organize your workflow with drag-free task management.</p>
+      </div>
 
-      <div style={styles.inputContainer}>
+      <div className="input-area">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter task"
+          placeholder="Add a new task..."
+          className="task-input"
         />
-        <button onClick={addTask}>Add</button>
+        <button className="add-btn" onClick={addTask}>Add Task</button>
       </div>
 
-      <div style={styles.board}>
+      <div className="board-grid">
         <Column title="To Do" columnKey="todo" />
         <Column title="In Progress" columnKey="inProgress" />
         <Column title="Done" columnKey="done" />
@@ -83,32 +83,5 @@ function App() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "20px",
-    fontFamily: "Arial",
-  },
-  inputContainer: {
-    marginBottom: "20px",
-  },
-  board: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
-  column: {
-    width: "30%",
-    background: "#f4f4f4",
-    padding: "10px",
-    borderRadius: "10px",
-  },
-  card: {
-    background: "white",
-    margin: "10px 0",
-    padding: "10px",
-    borderRadius: "5px",
-  },
-};
 
 export default App;
